@@ -39,6 +39,108 @@ int dev_read(int fd, char* buffer){
 }
 
 
+void arm_touch(const char* deviceName){
+    int fd = dev_open(deviceName);
+	if (fd<0){
+        exit(EXIT_FAILURE);
+	}
+    else{
+		dev_write(fd, "20");
+		usleep(3);
+    }
+}
+
+void arm_push(const char* deviceName, int pSeconds)
+{
+    int fd = dev_open(deviceName);
+	if (fd<0){
+        exit(EXIT_FAILURE);
+	}
+    else{
+		dev_write(fd, "3");
+		usleep(3);
+    }    
+}
+
+
+void arm_move(const char* deviceName, int pNumber, int pResolution)
+{
+    int fd = dev_open(deviceName);
+	if (fd<0){
+        exit(EXIT_FAILURE);
+	}
+    else if (pNumber == 0)
+    {
+        dev_write(fd, "50,50"); // Return initial Position
+        dev_write(fd, "50,50"); 
+		usleep(3);
+    }
+    else if (pNumber == 1)
+    {
+        dev_write(fd, "50,50"); // Return initial Position
+        dev_write(fd, "50,50");
+		usleep(3);
+    }
+    else if (pNumber == 2)
+    {
+        dev_write(fd, "50,50"); // Return initial Position
+        dev_write(fd, "50,50");
+		usleep(3);
+    }
+    else if (pNumber == 3)
+    {
+        dev_write(fd, "50,50"); // Return initial Position
+        dev_write(fd, "50,50");
+		usleep(3);
+    }
+    else if (pNumber == 4)
+    {
+        dev_write(fd, "50,50"); // Return initial Position
+        dev_write(fd, "50,50");
+		usleep(3);
+    }
+    else if (pNumber == 5)
+    {
+        dev_write(fd, "50,50"); // Return initial Position
+        dev_write(fd, "50,50");
+		usleep(3);
+    }
+    else if (pNumber == 6)
+    {
+        dev_write(fd, "50,50"); // Return initial Position
+        dev_write(fd, "50,50");
+		usleep(3);
+    }
+    else if (pNumber == 7)
+    {
+        dev_write(fd, "50,50"); // Return initial Position
+        dev_write(fd, "50,50");
+		usleep(3);
+    }
+    else if (pNumber == 8)
+    {
+        dev_write(fd, "50,50"); // Return initial Position
+        dev_write(fd, "50,50");
+		usleep(3);
+    }
+    else if (pNumber == 9)
+    {
+        dev_write(fd, "50,50"); // Return initial Position
+        dev_write(fd, "50,50");
+		usleep(3);
+    }
+}
+
+void returnInitialPos(const char* deviceName){
+	int fd = dev_open(deviceName);
+	if (fd<0){
+		return;
+	}
+	dev_write(fd, "50,50,50");
+	sleep(2);
+}
+
+
 
 
 
