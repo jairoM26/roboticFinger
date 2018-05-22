@@ -6,6 +6,7 @@ Jairo Méndez Martínez
 '''
 #importar bibliotecas necesarias para la realización del proyecto
 from tkinter import *
+from tkinter import messagebox
 import os
 from threading import Thread
 import threading
@@ -45,31 +46,45 @@ entryMove= Entry(canvas, width=3, bg='white', font= ('roboto condensed',12),fg='
 entryMove.place(x=85,y=228)
 labelMove=Label(canvas, text = "Key", font= ('roboto condensed',12), bg= 'light blue', fg= 'blue').place(x=130,y=229)
 entryPress= Entry(canvas, width=3, bg='white', font= ('roboto condensed',12),fg='blue')
-entryPress.place(x=275,y=55)
-labelPress=Label(canvas, text = "Seconds", font= ('roboto condensed',12), bg= 'light blue', fg= 'blue').place(x=317,y=55)
+entryPress.place(x=255,y=80)
+labelPress=Label(canvas, text = "Seconds", font= ('roboto condensed',12), bg= 'light blue', fg= 'blue').place(x=297,y=80)
 key = ""
 seconds = ""
 resolution = ""
 #---------------------------------------------------functions definition-----------------------------------------------
 def push():
     resolution = entryResolution.get()
-    print("touch")
-    writeFile(0, "touch", 0)
-    os.system("cd .. && cd Interprete/ && sudo ./roboticFinger -g ../GUI/"+fileName)
+    if(int(resolution) in [1,2,3]):
+        writeFile(0, "touch", 0)
+        os.system("cd .. && cd Interprete/ && sudo ./roboticFinger -g ../GUI/"+fileName)
+    else:
+        messagebox.showinfo(message="The resolution value must be a number between 1 and 3")
 
 def press():
     resolution = entryResolution.get()
-    seconds = entryPress.get()
-    print(seconds)
-    writeFile(1, "press", seconds)
-    os.system("cd .. && cd Interprete/ && sudo ./roboticFinger -g ../GUI/"+fileName)
+    if(int(resolution) in [1,2,3]):        
+        seconds = entryPress.get()
+        if(len(seconds) == 0):
+             messagebox.showinfo(message="The seconds value is empty, please enter the number of seconds")
+        else:
+            writeFile(1, "press", seconds)
+            os.system("cd .. && cd Interprete/ && sudo ./roboticFinger -g ../GUI/"+fileName)
+    else:
+        messagebox.showinfo(message="The resolution value must be a number between 1 and 3")    
 
 def moveTo():
     resolution = entryResolution.get()
-    key = entryMove.get()
-    print(key)
-    writeFile(1, "move", key)
-    os.system("cd .. && cd Interprete/ && sudo ./roboticFinger -g ../GUI/"+fileName)
+    if(int(resolution) in [1,2,3]):
+        key = entryMove.get()
+        if(len(key) == 0):
+            messagebox.showinfo(message="The key value is empty, please enter a number between 0 and 9")
+        elif(int(key) not in [0,1,2,3,4,5,6,7,8,9]):
+            messagebox.showinfo(message="The key value must be a number between 0 and 9")
+        else:
+            writeFile(1, "move", key)
+            os.system("cd .. && cd Interprete/ && sudo ./roboticFinger -g ../GUI/"+fileName)            
+    else:
+        messagebox.showinfo(message="The resolution value must be a number between 1 and 3")    
 
 #boton para regresar
 boton_touch = Button(ventana_principal, text= 'TOUCH', height= 8, width=12,  command= push, font= ('roboto condensed',10), bg= 'white', fg= 'blue').place(x=80, y=70)
