@@ -1,2 +1,2 @@
-resolution 
+resolution 2
 move 1

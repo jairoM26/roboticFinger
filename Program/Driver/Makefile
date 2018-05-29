@@ -1,21 +1,24 @@
-kmod = roboticArmKM
+module = roboticArmKM
 ifneq ($(KERNELRELEASE),)
-obj-m := $(kmod).o
+obj-m := $(module).o
 else
 
-KDIR ?= /lib/modules/$$(uname -r)/build
+module_dir ?= /lib/modules/$$(uname -r)/build
 
 all:
-	$(MAKE) -C $(KDIR) M=$$PWD modules
+	$(MAKE) -C $(module_dir) M=$$PWD modules
 
 load:
-	sudo insmod $(kmod).ko
+	sudo insmod $(module).ko
 
 unload:
-	sudo rmmod $(kmod).ko
+	sudo rmmod $(module).ko
 
 clean:
-	$(MAKE) -C $(KDIR) M=$$PWD clean
+	$(MAKE) -C $(module_dir) M=$$PWD clean
+
+read:
+	tail -f /var/log/kern.log 
 
 .PHONY  : clean
 endif

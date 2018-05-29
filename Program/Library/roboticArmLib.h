@@ -9,8 +9,6 @@
 #ifndef ROBOTICARMLIB
 #define ROBOTICARMLIB 
 
-int posInitX = 50;
-int posInitY = 50;
 /**
  * @brief 
  * 
@@ -50,7 +48,7 @@ int dev_read(int fd, char* buffer);
  * 
  * @param deviceName 
  */
-void arm_touch(const char* deviceName);
+void arm_touch(const char* deviceName,int pResolution);
 
 /**
  * @brief 
@@ -58,7 +56,7 @@ void arm_touch(const char* deviceName);
  * @param deviceName 
  * @param pSeconds 
  */
-void arm_push(const char* deviceName, int pSeconds);
+void arm_push(const char* deviceName, int pSeconds,int pResolution);
 
 /**
  * @brief 
@@ -73,6 +71,6 @@ void arm_move(const char* deviceName,int pNumber,int pResolution);
  * @brief 
  * 
  */
-void returnInitialPos();
+void setResolution(const char* deviceName, int resolution);
 
 #endif

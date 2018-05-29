@@ -17,7 +17,10 @@ import tkinter.scrolledtext as tkst
 
 fileName = "text.txt"
 
+#function that write into the configuration file
 def writeFile(x, function, number):
+    resolution = entryResolution.get()
+    print("resolucion tomada"+resolution)
     file = open(fileName,"w") 
     tmp = "resolution "+resolution+"\n"
     file.write(tmp)
@@ -36,12 +39,16 @@ ventana_principal.config(bg = 'light blue')  #le otorga color al 2fondo
 ventana_principal.geometry('400x400+100+30')  #destina el tamaño de la ventana
 ventana_principal.resizable(width=NO, height=NO)
 
+#canvas of the windows
 canvas= Canvas(ventana_principal, width=800, height=700, bg= 'light blue').place(x=-1,y=-1)
 
+#label of the resolution
 labelResolution = Label(canvas, text = "Screen Resolution", font= ('roboto condensed',12), bg= 'light blue', fg= 'blue').place(x=10,y=10)
+#entry to get resolution
 entryResolution = Entry(canvas, width=3, bg='white', font= ('roboto condensed',12),fg='blue')
 entryResolution.place(x=160,y=10) 
 entryResolution.insert(0, "1")
+#entry for the key move
 entryMove= Entry(canvas, width=3, bg='white', font= ('roboto condensed',12),fg='blue')
 entryMove.place(x=85,y=228)
 labelMove=Label(canvas, text = "Key", font= ('roboto condensed',12), bg= 'light blue', fg= 'blue').place(x=130,y=229)
@@ -54,37 +61,39 @@ resolution = ""
 #---------------------------------------------------functions definition-----------------------------------------------
 def push():
     resolution = entryResolution.get()
-    if(int(resolution) in [1,2,3]):
+    if(int(resolution) in [1,2,4,5]):
         writeFile(0, "touch", 0)
         os.system("cd .. && cd Interprete/ && sudo ./roboticFinger -g ../GUI/"+fileName)
     else:
-        messagebox.showinfo(message="The resolution value must be a number between 1 and 3")
+        messagebox.showinfo(message="The resolution value must be a number between 1,2,4 or 5")
 
+#function use when the user want to do a press for a mount of seconds
 def press():
-    resolution = entryResolution.get()
-    if(int(resolution) in [1,2,3]):        
-        seconds = entryPress.get()
+    resolution = entryResolution.get() #get the resolution
+    if(int(resolution) in [1,2,4,5]):        
+        seconds = entryPress.get() #get the entry for seconds
         if(len(seconds) == 0):
              messagebox.showinfo(message="The seconds value is empty, please enter the number of seconds")
         else:
             writeFile(1, "press", seconds)
             os.system("cd .. && cd Interprete/ && sudo ./roboticFinger -g ../GUI/"+fileName)
     else:
-        messagebox.showinfo(message="The resolution value must be a number between 1 and 3")    
+        messagebox.showinfo(message="The resolution value must be a number between 1,2,4 or 5")   
 
+#function call when the user want to move to some key
 def moveTo():
-    resolution = entryResolution.get()
-    if(int(resolution) in [1,2,3]):
-        key = entryMove.get()
+    resolution = entryResolution.get() #get the resolution entry
+    if(int(resolution) in [1,2,4,5]):
+        key = entryMove.get() #get the key entry
         if(len(key) == 0):
             messagebox.showinfo(message="The key value is empty, please enter a number between 0 and 9")
-        elif(int(key) not in [0,1,2,3,4,5,6,7,8,9]):
+        elif(int(key) not in [0,1,2,3,4,5,6,7,8,9,10]):
             messagebox.showinfo(message="The key value must be a number between 0 and 9")
         else:
             writeFile(1, "move", key)
             os.system("cd .. && cd Interprete/ && sudo ./roboticFinger -g ../GUI/"+fileName)            
     else:
-        messagebox.showinfo(message="The resolution value must be a number between 1 and 3")    
+        messagebox.showinfo(message="The resolution value must be a number between 1,2,4 or 5")    
 
 #boton para regresar
 boton_touch = Button(ventana_principal, text= 'TOUCH', height= 8, width=12,  command= push, font= ('roboto condensed',10), bg= 'white', fg= 'blue').place(x=80, y=70)

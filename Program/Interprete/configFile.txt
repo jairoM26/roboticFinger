@@ -1,5 +1,8 @@
-resolution 1
-
-move 3
-
+resolution 5
+move 0
+move 0
+move 6
 move 5
+move 4
+move 1
+move 10
